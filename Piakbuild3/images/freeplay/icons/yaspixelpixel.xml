@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TextureAtlas imagePath="yaspixel.png">
+	<!-- Created with Adobe Animate version 20.5.0.29329 -->
+	<!-- http://www.adobe.com/products/animate.html -->
+	<SubTexture name="confirm0000" x="138" y="0" width="46" height="39"/>
+	<SubTexture name="confirm0001" x="0" y="0" width="46" height="39"/>
+	<SubTexture name="confirm0002" x="46" y="0" width="46" height="39"/>
+	<SubTexture name="confirm0003" x="92" y="0" width="46" height="39"/>
+	<SubTexture name="confirm-hold0000" x="92" y="0" width="46" height="39"/>
+	<SubTexture name="idle0000" x="138" y="0" width="46" height="39"/>
+</TextureAtlas>

@@ -1,0 +1,137 @@
+import Xml;
+import Std;
+import haxe.Json;
+import StringTools;
+import funkin.Assets;
+import funkin.util.FileUtil;
+import funkin.util.FlxColorUtil;
+import funkin.modding.module.Module;
+import funkin.modding.PolymodHandler;
+
+class NovaConverters extends Module {
+
+    function new() {
+        super('NovaConverters');
+    }
+
+    function parseBool(string:String) {
+        return string == "true";
+    }
+
+    function getBaseTemplate() {
+        var currentFolder = "??";
+        for (mod in PolymodHandler.getAllMods()) {
+            var meta = Json.parse(FileUtil.readStringFromPath("mods/" + mod.id + "/_polymod_meta.json"));
+            if (meta.title == "Nova Character Editor") {
+                currentFolder = "mods/" + mod.id;
+                break;
+            }
+        }
+        return Json.parse(FileUtil.readStringFromPath(currentFolder + "/data/characters/templateCharacter.json"));
+    }
+
+    function charFromCNE(obj:Xml) {
+        var baseTemplate = getBaseTemplate();
+        baseTemplate.animations = [];
+        var index = 0;
+        for (i in obj.firstElement().attributes()) {
+            trace(i);
+        }
+        
+
+        var charData = obj.firstElement();
+        baseTemplate.assetPath = "characters/" + charData.get("sprite");
+        baseTemplate.singTime = charData.exists("holdTime") ? Std.parseInt(charData.get("holdTime")) : 4;
+        baseTemplate.offsets = [charData.exists("x") ? Std.parseInt(charData.get("x")) : 0, charData.exists("y") ? Std.parseInt(charData.get("y")) : 0];
+        baseTemplate.scale = charData.exists("scale") ? Std.parseInt(charData.get("scale")) : 1;
+        baseTemplate.healthIcon = {
+            id: charData.exists("icon") ? charData.get("icon") : ""
+        }
+        baseTemplate.flipX = charData.exists("flipX") ? parseBool(charData.get("flipX")) : 0;
+
+        for (i in charData.iterator()) {
+            if (i.nodeType+"" == "0") {
+                if (i.exists("anim")) {
+                    trace(i.nodeType + ": " + i);
+                    var daAnim = {
+                        flipX: i.exists("flipX") ? parseBool(i.get("flipX")) : false,
+                        flipY: i.exists("flipY") ? parseBool(i.get("flipY")) : false,
+                        offsets: [
+                            i.exists("x") ? Std.parseInt(i.get("x")) : 0,
+                            i.exists("y") ? Std.parseInt(i.get("y")) : 0
+                        ],
+                        frameRate: i.exists("fps") ? Std.parseInt(i.get("fps")) : 24,
+                        prefix: i.get("anim"),
+                        looped: i.looped != null ? i.looped : false,
+                        name: i.get("name")
+                    };
+                    /*if (i.indices != null && i.indices != []) {
+                        daAnim.indices = i.indices;
+                    }*/
+                    if (i.exists("indices")) {
+                        var splitted = Std.string(i.get("indices")).split(",");
+                        var index:Int = 0;
+                        for (i in splitted) {
+                            if (StringTools.contains(i, "..")) {
+                                var secondSplit = i.split("..");
+                                splitted.remove(i);
+                                var start = Std.parseInt(secondSplit[0]);
+                                var finish = Std.parseInt(secondSplit[1]);
+                                var offset = 0;
+                                for (num in start...finish+1) {
+                                    splitted.insert(index + offset, num);
+                                    offset++;
+                                }
+                            }
+                            index++;
+                        }
+                        trace(splitted);
+                        daAnim.indices = splitted;
+                    }
+                    baseTemplate.animations.push(daAnim);
+                }
+            }
+            
+        }
+
+        baseTemplate.name = "Your Name Here";
+        
+        return baseTemplate;
+    }
+    function charFromPsych(obj:Dynamic) {
+        var baseTemplate = getBaseTemplate();
+        baseTemplate.animations = [];
+
+        baseTemplate.assetPath = obj.image;
+        baseTemplate.singTime = obj.sing_duration;
+        baseTemplate.offsets = obj.position;
+        baseTemplate.scale = obj.scale;
+        baseTemplate.healthIcon = {
+            id: obj.healthIcon
+        }
+        baseTemplate.flipX = obj.flip_x;
+
+        for (i in obj.animations) {
+            var daAnim = {
+                flipX: i.flipX != null ? i.flipX : false,
+                flipY: i.flipY != null ? i.flipY : false,
+                offsets: i.offsets,
+                frameRate: i.fps,
+                prefix: i.name,
+                looped: i.looped != null ? i.looped : false,
+                name: i.anim
+            };
+            if (i.indices != null && i.indices != []) {
+                daAnim.indices = i.indices;
+            }
+            baseTemplate.animations.push(daAnim);
+        }
+
+        baseTemplate.name = "Your Name Here";
+        //trace(Json.stringify(baseTemplate, null, "\t"));
+
+        return baseTemplate;
+
+    }
+
+}

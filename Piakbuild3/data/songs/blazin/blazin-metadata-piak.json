@@ -1,0 +1,51 @@
+{
+  "version": "2.2.4",
+  "songName": "Blazin' (Piak Mix)",
+  "artist": "PiakTND",
+  "looped": false,
+  "offsets": {
+    "instrumental": 0,
+    "altInstrumentals": {    },
+    "vocals": {    },
+    "altVocals": {    }
+  },
+  "playData": {
+    "songVariations": [    ],
+    "difficulties": [
+      "easy",
+      "normal",
+      "hard"
+    ],
+    "characters": {
+      "player": "PiakTND",
+      "girlfriend": "",
+      "opponent": "darnell-blazin",
+      "instrumental": "piak",
+      "altInstrumentals": [      ]
+    },
+    "stage": "phillyBlazin",
+    "noteStyle": "[text => Normal, id => Normal]",
+    "ratings": {
+      "hard": 0
+    },
+    "previewStart": 0,
+    "previewEnd": 0
+  },
+  "generatedBy": "Friday Night Funkin' - v0.6.4",
+  "timeFormat": "ms",
+  "timeChanges": [
+    {
+      "t": 0,
+      "b": 0,
+      "bpm": 180,
+      "n": 4,
+      "d": 4,
+      "bt": [
+        4,
+        4,
+        4,
+        4
+      ]
+    }
+  ]
+}

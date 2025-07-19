@@ -1,0 +1,59 @@
+{
+	"danceEvery": 1,
+	"version": "1.0.0",
+	"offsets": [
+		0,
+		0
+	],
+	"scale": 1,
+	"flipX": true,
+	"name": "PiakTND",
+	"flipY": false,
+	"isPixel": false,
+	"singTime": 8,
+	"startingAnimation": "idle",
+	"assetPath": "characters/PiakTND",
+	"generatedBy": "Nova Character Editor v0.1.3",
+	"animations": [
+		{
+			"prefix": "Idle",
+			"offsets": [
+				0,
+				0
+			],
+			"name": "idle"
+		},
+		{
+			"prefix": "danceA",
+			"offsets": [
+				30,
+				104
+			],
+			"name": "singLEFT"
+		},
+		{
+			"prefix": "danceB",
+			"offsets": [
+				-38,
+				30
+			],
+			"name": "singDOWN"
+		},
+		{
+			"prefix": "danceC",
+			"offsets": [
+				-33,
+				147
+			],
+			"name": "singUP"
+		},
+		{
+			"prefix": "danceD",
+			"offsets": [
+				-117,
+				68
+			],
+			"name": "singRIGHT"
+		}
+	]
+}
